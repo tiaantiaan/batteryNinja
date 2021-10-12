@@ -1,13 +1,13 @@
 # BatteryNinja!
 A thing that monitors your UPS battery health and helps it not explode.
 
-[BatteryNinja!](images/batteryninjathumb.jpg)
+![BatteryNinja!](images/batteryninjathumb.jpg)
 
 ## Alpha version
 This project is very much in an alpha state, so there are bugs and the code looks quite rough. Please consider contributing improvements by submitting a PR.
 
 ## Demo video
-[![Demo video]](https://www.youtube.com/watch?v=UMRNiSmD5Bg "Demo")
+![[Demo video]](https://www.youtube.com/watch?v=UMRNiSmD5Bg "Demo")
 
 ## Components
 - NodeMCU or ESP8622 module
