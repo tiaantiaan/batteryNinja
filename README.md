@@ -12,6 +12,7 @@ A thing that monitors your UPS battery health and helps it not explode.
 - Resistors for a resistor divider with a 1:10 ratio
 
 ## Wiring Diagram
+```
                                                    +---------------------------------------------------------To inverter/
                                                    |                                                            charger
                                                    |                                                  +------
@@ -51,6 +52,7 @@ A thing that monitors your UPS battery health and helps it not explode.
     |                                                              |                                             |
     |                                                              |                                             |
     +--------------------------------------------------------------+---------------------------------------------+
+```
 
 ## Voltage selection
 This was designed to measure the voltage from two 12V batteries in series (24V). But it can be easily adapted to meaure the voltage from 12V battery by setting the `numberOfBatteries` parameter in the code to `1`.
