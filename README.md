@@ -9,7 +9,13 @@ A thing that monitors your UPS battery health and helps it not explode.
 ## Components
 - NodeMCU or ESP8622 module
 - ds18b20 Temperature Sensor
+- 4k7 Ohm resistor for the temperature sensor
 - Resistors for a resistor divider with a 1:10 ratio
+
+### Resistor divider
+The 10 bit ADC (Analogue to digital converter) of the NodeMCU has a maximum voltage of 3.3V. In other words it reads voltages between 0 and 3.3V and turns it into a number between 0 and 1024. This number is then converted into voltage in the code. The limitation of the ADC does, hovever, mean that the battery voltage has to be scaled down to a maximum of 3.3V. We use a resistor divider for this (https://ohmslawcalculator.com/voltage-divider-calculator). The maximum voltage of the battery is not 24V because a singe lead acid battery charges at around 13.8V (thus 27.6V for two). Assuming a maximum battery value of 33V (just to be safe and to make the math easier), the resistor divider has to scale the voltage down by a factor of 10. To achieve this, I chose  a value of 1kOhm for R1 and 9kOhm for R2. I actually used nine 1kOhm resistors because I had them around and you don't get a 9kOhm resistor value in most standard resistor ranges (see this thread for other solutions https://forum.arduino.cc/t/a-perfect-10-1-voltage-divider-using-only-one-resistor-value/475575). 
+
+To get better accuracy from the resistor  divider, make sure to use low tolerance resistors. E.g. the blue 1% tolerance resistors instead of the typical ones that have 5% tolerance.
 
 ## Wiring Diagram
 ```
@@ -20,7 +26,7 @@ A thing that monitors your UPS battery health and helps it not explode.
                                                    |                                                  |
     +----------------------------------------------+                     +----------+                 +----------+
     |                                              |                     |          |                 |          |
-    |                                             |                     |          |                 |          |
+    |                                              |                     |          |                 |          |
     |                                             +++                   +++        +++               +++         |
     |             +-------------------+        +--+-+-------------------+-+--+  +--+-+---------------+-+----+    |
     |             |                   |        |                             |  |                           |    |
@@ -53,6 +59,7 @@ A thing that monitors your UPS battery health and helps it not explode.
     |                                                              |                                             |
     +--------------------------------------------------------------+---------------------------------------------+
 ```
+Schematic made with http://asciiflow.com/
 
 ## Voltage selection
 This was designed to measure the voltage from two 12V batteries in series (24V). But it can be easily adapted to meaure the voltage from 12V battery by setting the `numberOfBatteries` parameter in the code to `1`.
