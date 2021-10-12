@@ -1,3 +1,31 @@
+/*
+ * BatteryNinja!
+ * A thing that monitors your UPS battery health and helps it not explode.
+ *
+ * Created by Tiaan <tiaan at tiaan dot net>
+ * Copyright (C) 2021
+ *
+ * Documentation: https://github.com/tiaantiaan/batteryNinja
+ * License: https://github.com/tiaantiaan/batteryNinja/blob/main/LICENSE
+ *
+ *******************************
+ *
+ * DESCRIPTION
+ *
+ * An ESP8266 (NodeMCU) reads the battery temperature and voltage via the built-in ADC
+ * and publishes it to an MQTT broker on regular intervals.
+ *
+ * An OLED display displays the battery voltage as a number and a graph along
+ * with the battery temperature and battery charged status.
+ *
+ *******************************
+ * CONNECTION DIAGRAM
+ *
+ * A0   Battery voltage (after voltage divider)
+ * D4   Temperature Sensor (Texas Instruments ds18b20)
+ *
+ */
+
 #include "EspMQTTClient.h"
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
@@ -41,7 +69,7 @@ const float minBatteryVoltage = 10.8*numberOfBatteries;
 const float maxBatteryVoltage = 13.8*numberOfBatteries; // This is the maximum charged voltage. From https://www.vision-batt.com/site/product_files/6FM100-X.pdf this value actually varies with temperature. When charging the voltage goes up to 15V.
 const float chargingVoltage = 14*numberOfBatteries; // Voltage that charger charger batteries at.
 bool isCharging = false;
-float sensorValue = 0;          // value read from the pot
+float sensorValue = 0;
 float batteryVoltage = 0;
 float previousBatteryVoltage = 0;
 float batteryPercentage = 0;
@@ -189,12 +217,14 @@ void updateDisplay(float temperature, float voltage, float percentage) {
   display.setCursor(0, 25);
   display.println(("T: " + String(temperature) + (char)0xF7 + "C"));
 
-  // Battery picture
-  display.drawRect(89+9, 0, 19, 6, SSD1306_WHITE); // Battery terminal
-  display.drawRect(89, 5, 38, 59, SSD1306_WHITE); // Battery big block
-
+  // Draw battery picture
+  // Battery terminal
+  display.drawRect(89+9, 0, 19, 6, SSD1306_WHITE);
+  // Battery big block
+  display.drawRect(89, 5, 38, 59, SSD1306_WHITE);
+  // Battery fill based on percentage
   int blockHeight = int(percentage/100*56);
-  display.fillRect(89+2, 5+2+(56-blockHeight), 38-4, blockHeight-1, SSD1306_WHITE); // Battery fill
+  display.fillRect(89+2, 5+2+(56-blockHeight), 38-4, blockHeight-1, SSD1306_WHITE);
 
   // Graph
   float maximumGraphValue = 0;
@@ -207,9 +237,9 @@ void updateDisplay(float temperature, float voltage, float percentage) {
       minimumGraphValue = batteryVoltageGraph[k]; 
     }
   } 
-
+  // Make the graph not show up as random dots when the max and min are very close together
   if (maximumGraphValue - minimumGraphValue < 2) {
-    minimumGraphValue = minimumGraphValue - 3; // Make the graph not show up as random dots when the max and min are very close together
+    minimumGraphValue = minimumGraphValue - 3;
   }
 
   // Debug messages
@@ -323,5 +353,6 @@ void displayLogo() {
 
       display.clearDisplay();
       display.drawBitmap(0, 0, logo, 128, 64, WHITE);
+
       display.display(); // This has to be called to write the buffer to the display
 }
