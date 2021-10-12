@@ -10,10 +10,10 @@ This project is very much in an alpha state, so there are bugs and the code look
 ![[Demo video]](https://www.youtube.com/watch?v=UMRNiSmD5Bg "Demo")
 
 ## Components
-- NodeMCU or ESP8622 module
-- ds18b20 Temperature Sensor
+- NodeMCU (or raw ESP8622 module but you'll have to change the resistor values to match the 1V maximum of the ADC)
+- ds18b20 Texas Instruments Temperature Sensor
 - 4k7 Ohm resistor for the temperature sensor
-- Resistors for a resistor divider with a 1:10 ratio
+- Resistors for a resistor divider with a 1:10 ratio (see below)
 
 ### Resistor divider
 The 10 bit ADC (Analogue to digital converter) of the NodeMCU has a maximum voltage of 3.3V (a raw ESP8622 has a 1V maximum). In other words it reads voltages between 0 and 3.3V and turns it into a number between 0 and 1024. This number is then converted into voltage in the code. The limitation of the ADC does, hovever, mean that the battery voltage has to be scaled down to a maximum of 3.3V. We use a resistor divider for this (https://ohmslawcalculator.com/voltage-divider-calculator). The maximum voltage of the battery is not 24V because a singe lead acid battery charges at around 13.8V (thus 27.6V for two). Assuming a maximum battery value of 33V (just to be safe and to make the math easier), the resistor divider has to scale the voltage down by a factor of 10. To achieve this, I chose  a value of 1kOhm for R1 and 9kOhm for R2. I actually used nine 1kOhm resistors because I had them around and you don't get a 9kOhm resistor value in most standard resistor ranges (see this thread for other solutions https://forum.arduino.cc/t/a-perfect-10-1-voltage-divider-using-only-one-resistor-value/475575). 
