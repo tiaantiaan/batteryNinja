@@ -3,11 +3,18 @@ A thing that monitors your UPS battery health and helps it not explode.
 
 ![BatteryNinja!](images/batteryninjathumb.jpg)
 
+## Demo video
+![[Demo video]](https://www.youtube.com/watch?v=UMRNiSmD5Bg "Demo")
+
 ## Alpha version
 This project is very much in an alpha state, so there are bugs and the code looks quite rough. Please consider contributing improvements by submitting a PR.
 
-## Demo video
-![[Demo video]](https://www.youtube.com/watch?v=UMRNiSmD5Bg "Demo")
+## Description
+An ESP8266 (NodeMCU) reads the battery temperature via a ds18b20 sensor and voltage via the built-in ADC and publishes it to an MQTT broker on regular intervals.
+An OLED display displays the battery voltage as a number and a graph along with the battery temperature and battery charging status.
+
+## Publishing to an MQTT Broker
+I configured the device to publish the battery metrics via MQTT to a broker running on a RaspberryPi. You can of coarse configure it to publish to any broker. Mine was installed as part of an ![OpenHab](https://www.openhab.org/) setup which includes InfluxDB, Grafana,Telegram and AWS Polly plugins.
 
 ## Components
 - NodeMCU (or raw ESP8622 module but you'll have to change the resistor values to match the 1V maximum of the ADC)
