@@ -1,7 +1,10 @@
 # BatteryNinja!
 A thing that monitors your UPS battery health and helps it not explode.
 
-![BatteryNinja!](images/batteryninjathumb.jpg)
+[BatteryNinja!](images/batteryninjathumb.jpg)
+
+## Alpha version
+This project is very much in an alpha state, so there are bugs and the code looks quite rough. Please consider contributing improvements by submitting a PR.
 
 ## Demo video
 [![Demo video]](https://www.youtube.com/watch?v=UMRNiSmD5Bg "Demo")
@@ -64,7 +67,7 @@ Schematic made with http://asciiflow.com/
 ## Voltage selection
 This was designed to measure the voltage from two 12V batteries in series (24V). But it can be easily adapted to meaure the voltage from 12V battery by setting the `numberOfBatteries` parameter in the code to `1`.
 
-The voltage divider
+When using one battery, the resistor values used in the schematic will still work, but you can get twice resolution from the ADC when you use a resistor divider with a 5:1 voltage ratio.
 
 ## Programming the device
 Program the device using the Arduino IDE. Make sure that you have the ESP8266 libraries installed (search the web for a tutorial).
