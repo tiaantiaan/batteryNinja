@@ -32,7 +32,7 @@ To get better accuracy from the resistor divider, make sure to use low tolerance
     +----------------------------------------------+
     |                                              |
     |           +----------------------+           |
-    |           |     OLEDDisplay     |           |
+    |           |     OLED Display     |           |
     |           |                      |           +-------------------------------------------------------->To Inverter/
     |           |      (SSD1306)       |           |                                                            charger
     |           |                      |           |                                                  +----->
